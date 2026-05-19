@@ -30,25 +30,56 @@
 - Telegram bot token
 - ProxyAPI token
 
-## Установка
+## Quickstart (Windows / PowerShell)
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
+1. Создай и активируй виртуальное окружение:
 
-Скопируй `.env.example` в `.env` и заполни токены:
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
 
-```bash
-copy .env.example .env
-```
+2. Установи зависимости:
 
-## Запуск
+   ```powershell
+   pip install -r requirements.txt
+   ```
 
-```bash
-python src/bot.py
-```
+3. Создай файл `.env` и заполни переменные окружения из разделов ниже.
+
+4. Запусти бота:
+
+   ```powershell
+   python src/bot.py
+   ```
+
+### Обязательные переменные окружения
+
+- `TELEGRAM_TOKEN`
+- `PROXYAPI_TOKEN`
+- `CURSOR_API_KEY`
+- `GITHUB_TOKEN`
+- `GITHUB_REPO` — например `tunsuyokii/hedgehog`
+
+### Обязательные переменные для S3-аудита
+
+- `S3_ENDPOINT`
+- `S3_BUCKET`
+- `S3_ACCESS_KEY`
+- `S3_SECRET_KEY`
+
+### Рекомендуемые переменные окружения
+
+Можно не задавать, если подходят значения по умолчанию:
+
+- `PROXY_BASE_URL=https://api.proxyapi.ru/openai/v1`
+- `CASUAL_MODEL_NAME=gpt-5.5`
+- `SECURITY_MODEL_NAME=gpt-5.5`
+- `SPEC_MODEL_NAME=gpt-5.5`
+- `MAX_REPLY_CHARS=3500`
+- `ALLOWED_USERNAMES=tunsuyoki`
+- `CURSOR_API_BASE=https://api.cursor.com/v1` — если используется другой endpoint, поменяй значение
+- `S3_PREFIX=telegram-cursor`
 
 ## Команды бота
 
