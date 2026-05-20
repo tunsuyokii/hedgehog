@@ -4,3 +4,4 @@ __pycache__/
 logs/
 uploads/
 assistants_registry.json
+data/

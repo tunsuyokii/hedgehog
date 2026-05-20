@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
+from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -85,6 +86,7 @@ RATE_LIMITER = RateLimiter(
 )
 CHAT_ASSISTANT_ID: Optional[str] = None
 CURSOR_PR_DETECTED_GRACE_SECONDS = int(os.getenv("CURSOR_PR_DETECTED_GRACE_SECONDS", "120"))
+CURSOR_STALE_SECONDS = int(os.getenv("CURSOR_STALE_SECONDS", "120"))
 
 
 def get_session(chat_id: int) -> ChatSession:
@@ -631,6 +633,24 @@ async def _run_cursor_task(task: TaskRequest, update: Update) -> None:
                         state.status = "finished"
                         state.message = "Cursor run still running, but PR detected; proceeding with merge flow."
                         return state
+
+            updated_at_raw = ""
+            if isinstance(state.raw, dict):
+                updated_at_raw = str(
+                    state.raw.get("updatedAt", state.raw.get("updated_at", ""))
+                ).strip()
+            if normalized in {"running", "in_progress"} and updated_at_raw:
+                try:
+                    updated_dt = datetime.fromisoformat(updated_at_raw.replace("Z", "+00:00"))
+                    stale_for = now - updated_dt.astimezone(timezone.utc).timestamp()
+                except Exception:
+                    stale_for = 0.0
+                if stale_for >= CURSOR_STALE_SECONDS and (state.pr_url or state.pr_number):
+                    state.status = "finished"
+                    state.message = (
+                        "Cursor run stale, but PR already exists; proceeding with merge flow."
+                    )
+                    return state
 
             if normalized in {"finished", "failed", "cancelled"}:
                 return final_state_local

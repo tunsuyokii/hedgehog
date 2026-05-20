@@ -17,6 +17,7 @@ def _parse_csv_set(raw: str) -> Set[str]:
 class IdentityPolicy:
     allowed_usernames: Set[str]
     allowed_chat_ids: Set[int]
+    primary_private_username: str
 
     @classmethod
     def from_env(cls) -> "IdentityPolicy":
@@ -35,7 +36,14 @@ class IdentityPolicy:
                 chat_ids.add(int(item))
             except ValueError:
                 continue
-        return cls(allowed_usernames=usernames, allowed_chat_ids=chat_ids)
+        primary = os.getenv("ALLOWED_USERNAME", "tunsuyoki").strip().lower().lstrip("@")
+        if primary:
+            usernames.add(primary)
+        return cls(
+            allowed_usernames=usernames,
+            allowed_chat_ids=chat_ids,
+            primary_private_username=primary or "tunsuyoki",
+        )
 
     def is_user_allowed(self, update: Update) -> bool:
         user = update.effective_user
@@ -43,14 +51,19 @@ class IdentityPolicy:
         if not user or not chat:
             return False
 
-        if self.allowed_chat_ids and chat.id not in self.allowed_chat_ids:
-            return False
+        username = (user.username or "").strip().lower().lstrip("@")
 
-        if not self.allowed_usernames:
+        # Rule 1: In private chat allow only the main owner user.
+        if chat.type == "private":
+            return username == self.primary_private_username
+
+        # Rule 2: In groups/supergroups where bot is present, allow all members.
+        if chat.type in {"group", "supergroup"}:
+            if self.allowed_chat_ids and chat.id not in self.allowed_chat_ids:
+                return False
             return True
 
-        username = (user.username or "").strip().lower().lstrip("@")
-        return username in self.allowed_usernames
+        return False
 
     @staticmethod
     def actor_username(update: Update) -> str:

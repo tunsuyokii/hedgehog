@@ -64,6 +64,7 @@ class CursorRunState:
     run_id: str
     status: str
     message: str = ""
+    agent_id: Optional[str] = None
     branch: Optional[str] = None
     pr_number: Optional[int] = None
     pr_url: Optional[str] = None

@@ -58,10 +58,10 @@ class SpecFlow:
             summary = summary[:177] + "..."
         return TaskSpec(
             short_summary=summary or "Сформулировать и реализовать пользовательский запрос",
-            implementation_goal="Реализовать изменение в репозитории через безопасный Git workflow",
+            implementation_goal="Реализовать изменение безопасно: backend локально, frontend через Git workflow",
             acceptance_criteria=[
-                "Изменения оформлены через GitHub PR",
-                "Хост не затронут, только Git/S3/API операции",
+                "Изменение применено в нужном контуре (backend локально или frontend через PR)",
+                "Есть проверяемый результат и статус выполнения",
                 "Есть понятный итог для пользователя",
             ],
             needs_clarification=False,
