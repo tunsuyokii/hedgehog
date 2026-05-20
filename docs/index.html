@@ -1,46 +1,173 @@
 <!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ёжик был тут</title>
-  <style>
-    :root {
-      color-scheme: dark;
-    }
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    .screen {
-      min-height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 18px;
-      color: #fff;
-    }
-    .icon {
-      width: 84px;
-      height: 84px;
-      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35));
-    }
-    .label {
-      font-size: clamp(28px, 5vw, 56px);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <main class="screen">
-    <img class="icon" src="./hedgehog.svg" alt="Иконка ёжика" />
-    <div class="label">Ёжик был тут</div>
-  </main>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Крутые аналитики</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: #4c1231;
+        background: #ffd7e8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 20% 20%, #fff5fb 0 12rem, transparent 12rem),
+          linear-gradient(135deg, #ffd7e8 0%, #ff9fcc 100%);
+      }
+
+      main {
+        width: min(92vw, 42rem);
+        padding: clamp(2rem, 6vw, 3rem);
+        border: 0.25rem solid rgba(255, 255, 255, 0.8);
+        border-radius: 2rem;
+        background: rgba(255, 244, 250, 0.88);
+        box-shadow: 0 1.5rem 4rem rgba(139, 24, 84, 0.24);
+        text-align: center;
+      }
+
+      .hedgehog-scene {
+        width: clamp(10rem, 42vw, 15rem);
+        margin: 0 auto 1.25rem;
+        filter: drop-shadow(0 1rem 1.1rem rgba(139, 24, 84, 0.18));
+      }
+
+      .hedgehog-scene svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      h1 {
+        margin: 0 0 0.75rem;
+        font-size: clamp(2rem, 8vw, 4.5rem);
+        line-height: 0.95;
+      }
+
+      p {
+        margin: 0 0 2rem;
+        color: #8c2a5b;
+        font-size: 1.1rem;
+      }
+
+      .counter-panel {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      button {
+        border: 0;
+        border-radius: 999px;
+        padding: 1rem 1.4rem;
+        background: #ec3f94;
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 800;
+        box-shadow: 0 0.7rem 1.5rem rgba(236, 63, 148, 0.35);
+        transition:
+          transform 140ms ease,
+          box-shadow 140ms ease,
+          background 140ms ease;
+      }
+
+      button:hover {
+        background: #d92d82;
+        transform: translateY(-0.12rem);
+        box-shadow: 0 0.9rem 1.8rem rgba(217, 45, 130, 0.4);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      button:focus-visible {
+        outline: 0.25rem solid #fff;
+        outline-offset: 0.2rem;
+      }
+
+      .count-card {
+        min-width: 9.5rem;
+        padding: 0.8rem 1rem;
+        border-radius: 1.25rem;
+        background: #fff;
+        color: #a41462;
+        font-weight: 800;
+        box-shadow: inset 0 0 0 0.12rem rgba(236, 63, 148, 0.16);
+      }
+
+      .count-card span {
+        display: block;
+      }
+
+      #analyst-count {
+        margin-top: 0.1rem;
+        font-size: 2.5rem;
+        line-height: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <main aria-labelledby="page-title">
+      <div class="hedgehog-scene" aria-label="Ёжик несёт гриб на спине" role="img">
+        <svg viewBox="0 0 180 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="89" cy="122" rx="58" ry="10" fill="#dc7aa9" opacity="0.25"/>
+          <g stroke="#5f2b41" stroke-width="6" stroke-linecap="round">
+            <line x1="48" y1="70" x2="31" y2="46"/>
+            <line x1="61" y1="62" x2="54" y2="34"/>
+            <line x1="77" y1="59" x2="80" y2="31"/>
+            <line x1="94" y1="61" x2="108" y2="36"/>
+            <line x1="108" y1="68" x2="133" y2="49"/>
+          </g>
+          <g aria-hidden="true">
+            <path d="M83 55C83 44 90 37 99 37C108 37 115 44 115 55H83Z" fill="#e23d57" stroke="#5f2b41" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M94 55H105L109 83H90L94 55Z" fill="#ffe3c4" stroke="#5f2b41" stroke-width="5" stroke-linejoin="round"/>
+            <circle cx="94" cy="47" r="3.5" fill="#fff8f1"/>
+            <circle cx="105" cy="45" r="3" fill="#fff8f1"/>
+            <circle cx="110" cy="52" r="2.5" fill="#fff8f1"/>
+          </g>
+          <path d="M37 92C37 70 57 55 84 55C110 55 130 71 132 93C128 112 111 122 84 122C58 122 40 112 37 92Z" fill="#fff8fb" stroke="#5f2b41" stroke-width="6"/>
+          <ellipse cx="123" cy="95" rx="28" ry="20" fill="#fff8fb" stroke="#5f2b41" stroke-width="6"/>
+          <circle cx="131" cy="89" r="4" fill="#5f2b41"/>
+          <circle cx="149" cy="96" r="3.5" fill="#5f2b41"/>
+          <path d="M135 110C130 117 119 121 106 119" stroke="#5f2b41" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1 id="page-title">Крутые аналитики</h1>
+      <p>Нажимай кнопку и пополняй розовый счётчик.</p>
+      <section class="counter-panel" aria-label="Счётчик крутых аналитиков">
+        <button id="analyst-button" type="button">Я крутой аналитик</button>
+        <output class="count-card" for="analyst-button">
+          <span>Счётчик</span>
+          <span id="analyst-count">0</span>
+        </output>
+      </section>
+    </main>
+
+    <script>
+      const analystButton = document.querySelector("#analyst-button");
+      const analystCount = document.querySelector("#analyst-count");
+      let count = 0;
+
+      analystButton.addEventListener("click", () => {
+        count += 1;
+        analystCount.textContent = count;
+      });
+    </script>
+  </body>
 </html>
